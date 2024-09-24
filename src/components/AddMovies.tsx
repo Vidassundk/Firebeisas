@@ -57,6 +57,7 @@ const AddMovies = ({
             styleType="login"
             type="submit"
             className="w-full"
+            arrow
           />
         </div>
       </form>
