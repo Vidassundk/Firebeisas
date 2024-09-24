@@ -1,56 +1,131 @@
-import React, { useState } from "react";
+// src/components/MovieListItem.tsx
 
-interface MovieListItemProps {
-  movie: {
-    id: number;
-    title: string;
-    receivedAnOscar: boolean;
-    imageUrl: string;
-  };
-  updateFunction: (id: number, updatedMovieTitle: string) => void;
-  deleteFunction: (id: number) => void;
-  uploadFileFunction: (file: File, movieId: number) => void;
+import React from "react";
+import Typography from "./UI/Typography";
+import InputWithLabel from "./UI/InputWithLabel";
+import Button from "./UI/Button";
+import useMovieListItem from "../hooks/useMovieListItem";
+import Badge from "./UI/Badge";
+
+interface Movie {
+  id: string;
+  title: string;
+  receivedAnOscar: boolean;
+  imageUrl: string;
+  releaseYear: number;
 }
 
-const MovieListItem = ({
+interface MovieListItemProps {
+  movie: Movie;
+  updateFunction: (id: string, updatedMovieTitle: string) => Promise<void>;
+  deleteFunction: (id: string) => Promise<void>;
+  uploadFileFunction: (file: File, movieId: string) => Promise<void>;
+}
+
+const MovieListItem: React.FC<MovieListItemProps> = ({
   movie,
   updateFunction,
   deleteFunction,
   uploadFileFunction,
-}: MovieListItemProps) => {
-  const [updatedMovieTitle, setUpdatedMovieTitle] = useState("");
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-
-  const uploadHandler = () => {
-    uploadFileFunction(uploadedFile, movie.id);
-  };
+}) => {
+  const {
+    register,
+    handleSubmit,
+    onSubmit,
+    handleFileChange,
+    uploadHandler,
+    deleteHandler,
+    errors,
+    uploadedFile,
+    fileError,
+  } = useMovieListItem({
+    id: movie.id,
+    title: movie.title,
+    receivedAnOscar: movie.receivedAnOscar,
+    imageUrl: movie.imageUrl,
+    updateFunction,
+    deleteFunction,
+    uploadFileFunction,
+  });
 
   return (
-    <div style={{ color: movie.receivedAnOscar ? "green" : "red" }}>
-      {movie.title}
+    <li className="flex md:h-[700px] flex-col-reverse items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row overflow-hidden">
+      <div className="flex flex-col p-12 w-full md:w-1/3 leading-normal gap-10 min-w-[450px]">
+        <div className="flex flex-col w-full divide divide-y-2">
+          <div className="py-6">
+            <Typography variant="h4" className="mb-4 line-clamp-2">
+              {movie.title}
+            </Typography>
+            <div className="flex flex-row gap-2">
+              <Badge variant="gray">🕒 {movie.releaseYear}</Badge>
+              {movie.receivedAnOscar && <Badge>🏆 Oscar Winner</Badge>}
+            </div>
+          </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="flex flex-col gap-4 py-6">
+              <InputWithLabel
+                label="Update Title"
+                name="updatedMovieTitle"
+                error={errors.updatedMovieTitle?.message}
+                {...register("updatedMovieTitle")}
+              />
 
-      {movie.imageUrl && (
-        <img src={movie.imageUrl} alt={movie.title} width="100" />
-      )}
+              <Button
+                label="Update"
+                styleType="login"
+                type="submit" // Use type="submit" for form submission
+                disabled={!!errors.updatedMovieTitle}
+              />
+            </div>
+          </form>
+          <div className="flex flex-col gap-4 py-6">
+            <div>
+              <Typography className="mb-2" variant="label" htmlFor="file">
+                {movie.imageUrl ? "Update Image" : "Upload Image"}
+              </Typography>
+              <input
+                type="file"
+                onChange={handleFileChange}
+                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              />
+            </div>
+            <Button
+              label={movie.imageUrl ? "Update Image" : "Upload Image"}
+              styleType="google"
+              onClick={uploadHandler}
+              disabled={!!fileError || !uploadedFile}
+            />
 
-      <input
-        placeholder="new title"
-        value={updatedMovieTitle}
-        onChange={(e) => setUpdatedMovieTitle(e.target.value)}
-      />
-      <button onClick={() => updateFunction(movie.id, updatedMovieTitle)}>
-        Update
-      </button>
-      <button onClick={() => deleteFunction(movie.id)}>Delete</button>
-
-      <div>
-        <input
-          type="file"
-          onChange={(e) => setUploadedFile(e.target.files[0])}
-        />
-        <button onClick={uploadHandler}>Upload</button>
+            {fileError && <Typography variant="error">{fileError}</Typography>}
+          </div>
+          <div className="flex flex-col gap-4 py-6">
+            <div>
+              <Typography className="mb-2" variant="label" htmlFor="file">
+                Remove from the list
+              </Typography>
+              <Button
+                label="Delete"
+                styleType="error"
+                onClick={deleteHandler}
+              />
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+      {movie.imageUrl ? (
+        <img
+          className="object-cover h-full md:w-2/3 bg-slate-300"
+          src={movie.imageUrl}
+          alt="movie poster"
+        />
+      ) : (
+        <div className="h-full  md:w-2/3 bg-slate-300 flex items-center justify-center">
+          <Typography className="text-center" variant="p">
+            No image available
+          </Typography>
+        </div>
+      )}
+    </li>
   );
 };
 

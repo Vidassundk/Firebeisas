@@ -1,16 +1,44 @@
+// App.tsx
 import React from "react";
-import Auth from "./components/Auth";
-import AddMovies from "./components/AddMovies";
-import MovieList from "./components/MovieList";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { AuthProvider, useAuth } from "./hooks/useAuth";
+import LoginScreen from "./screens/LoginScreen";
+import DashboardScreen from "./screens/DashboardScreen";
 
-const App = () => {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <Auth />
-      <AddMovies />
-      <MovieList />
-    </div>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginScreen />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardScreen />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/" element={<Navigate to="/dashboard" />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
+};
+
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) return <div>Loading...</div>;
+
+  return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
 };
 
 export default App;
