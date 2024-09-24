@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth, googleProvider } from "../config/firebase";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
-import { z } from "zod";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  registerWithEmail,
+  loginWithEmail,
+  loginWithGoogle,
+} from "../services/authService";
 
 const authSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -33,7 +32,7 @@ export const useAuthService = () => {
   const handleRegister = async (data: AuthFormData) => {
     const { email, password } = data;
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      await registerWithEmail(email, password);
       navigate("/dashboard");
     } catch (error: any) {
       setError(error.message);
@@ -43,7 +42,7 @@ export const useAuthService = () => {
   const handleLogin = async (data: AuthFormData) => {
     const { email, password } = data;
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await loginWithEmail(email, password);
       navigate("/dashboard");
     } catch (error: any) {
       setError(error.message);
@@ -52,7 +51,7 @@ export const useAuthService = () => {
 
   const signInWithGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
+      await loginWithGoogle();
       navigate("/dashboard");
     } catch (error: any) {
       setError(error.message);

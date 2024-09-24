@@ -19,14 +19,12 @@ interface Movie {
   releaseYear: number;
 }
 
-// Fetch the list of movies
 export const getMovieList = async (): Promise<Movie[]> => {
   const moviesCollection = collection(db, "movies");
   const moviesSnapshot = await getDocs(moviesCollection);
 
-  // Map Firestore documents to the Movie interface
   const moviesData = moviesSnapshot.docs.map((doc) => {
-    const data = doc.data(); // Get the document data
+    const data = doc.data();
     return {
       id: doc.id,
       title: data.title,
@@ -39,7 +37,6 @@ export const getMovieList = async (): Promise<Movie[]> => {
   return moviesData;
 };
 
-// Update the movie title
 export const updateMovieTitle = async (
   id: string,
   updatedMovieTitle: string
@@ -93,12 +90,12 @@ export const addMovie = async (
       title,
       releaseDate: year,
       receivedAnOscar,
-      userId: auth?.currentUser?.uid, // Assuming auth is set up
+      userId: auth?.currentUser?.uid,
     };
 
     const docRef = await addDoc(collection(db, "movies"), newMovie);
 
-    return docRef.id; // Return the movie document ID
+    return docRef.id;
   } catch (error) {
     console.error("Error adding new movie:", error);
     throw error;

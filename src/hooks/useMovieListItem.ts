@@ -1,5 +1,3 @@
-// src/hooks/useMovieListItem.ts
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -43,7 +41,7 @@ const useMovieListItem = ({
   const onSubmit = async (data: { updatedMovieTitle: string }) => {
     try {
       await updateFunction(id, data.updatedMovieTitle);
-      reset(); // Reset the form after successful submission
+      reset();
     } catch (error) {
       console.error("Error updating movie title:", error);
     }
