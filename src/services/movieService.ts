@@ -53,7 +53,6 @@ export const updateMovieTitle = async (
   }
 };
 
-// Delete a movie
 export const deleteMovie = async (id: string) => {
   try {
     const movieDoc = doc(db, "movies", id);
@@ -64,20 +63,16 @@ export const deleteMovie = async (id: string) => {
   }
 };
 
-// Upload a movie image
 export const uploadMovieImage = async (file: File, movieId: string) => {
   if (!file) throw new Error("No file provided");
 
   const storageRef = ref(storage, `movieImages/${movieId}/${file.name}`);
 
   try {
-    // Upload the file to Firebase Storage
     await uploadBytes(storageRef, file);
 
-    // Get the file's download URL
     const downloadURL = await getDownloadURL(storageRef);
 
-    // Update the Firestore document with the image URL
     const movieDoc = doc(db, "movies", movieId);
     await updateDoc(movieDoc, { imageUrl: downloadURL });
 

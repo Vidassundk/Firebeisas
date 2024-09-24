@@ -49,8 +49,7 @@ const Header = ({ user, logout }: HeaderProps) => {
             <Button
               styleType="github"
               label="Get the code on Github"
-              href="https://github.com/Vidassundk"
-              onClick={logout}
+              href="https://github.com/Vidassundk/Firebeisas"
             ></Button>
             <Button
               styleType="google"

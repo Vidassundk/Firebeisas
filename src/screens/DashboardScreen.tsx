@@ -5,10 +5,9 @@ import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { useAuth } from "../hooks/useAuth";
 import HeaderLayout from "../components/UI/HeaderLayout";
-import useMovieService from "../hooks/useMovieService"; // Import the unified movie service hook
+import useMovieService from "../hooks/useMovieService";
 
 const DashboardScreen = () => {
-  // Initialize movie service hook in the parent component
   const {
     movieList,
     loading,
@@ -21,7 +20,7 @@ const DashboardScreen = () => {
     errors,
     receivedAnOscar,
     setReceivedAnOscar,
-    onSubmit, // Form submit handler for adding a movie
+    onSubmit,
   } = useMovieService();
 
   // Auth functionality
@@ -38,7 +37,6 @@ const DashboardScreen = () => {
   return (
     <HeaderLayout user={user} logout={logout}>
       <div className="flex flex-col w-full gap-12">
-        {/* Pass the relevant form props to AddMovies */}
         <AddMovies
           register={register}
           handleSubmit={handleSubmit}
@@ -47,7 +45,7 @@ const DashboardScreen = () => {
           setReceivedAnOscar={setReceivedAnOscar}
           onSubmit={onSubmit}
         />
-        {/* Pass the movie list props to MovieList */}
+
         <MovieList
           movieList={movieList}
           loading={loading}

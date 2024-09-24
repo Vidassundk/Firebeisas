@@ -1,7 +1,7 @@
 import React from "react";
-import InputWithLabel from "./UI/InputWithLabel"; // Your custom input component
-import Button from "./UI/Button"; // Your custom button component
-import Typography from "./UI/Typography"; // Your custom typography component for labels
+import InputWithLabel from "./UI/InputWithLabel";
+import Button from "./UI/Button";
+import Typography from "./UI/Typography";
 
 const AddMovies = ({
   register,
@@ -13,33 +13,31 @@ const AddMovies = ({
 }) => {
   return (
     <div className="p-6 max-w-full rounded-lg bg-slate-100">
-      {/* Responsive form layout: vertical on smaller screens, horizontal on md and larger */}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col md:flex-row flex-wrap items-center gap-6"
       >
-        {/* Movie Title */}
         <div className="w-full md:flex-1">
           <InputWithLabel
             label="Add a New Movie to the List"
             name="title"
             placeholder="Enter the movie title"
-            error={errors.title?.message} // Pass error message to InputWithLabel
+            error={errors.title?.message}
             {...register("title")}
           />
         </div>
-        {/* Movie Year */}
+
         <div className="w-full md:flex-1">
           <InputWithLabel
             label="Release Year"
             name="year"
             type="number"
             placeholder="Enter the release year"
-            error={errors.year?.message} // Pass error message to InputWithLabel
-            {...register("year", { valueAsNumber: true })} // Register with value as number
+            error={errors.year?.message}
+            {...register("year", { valueAsNumber: true })}
           />
         </div>
-        {/* Oscar Checkbox */}
+
         <div className="flex items-center w-full md:w-auto ">
           <input
             id="receivedAnOscar"
@@ -52,7 +50,7 @@ const AddMovies = ({
             Received an Oscar
           </Typography>
         </div>
-        {/* Submit Button */}
+
         <div className="w-full md:w-auto">
           <Button
             label="Add Movie"

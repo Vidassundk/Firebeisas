@@ -1,5 +1,3 @@
-// src/components/MovieListItem.tsx
-
 import React from "react";
 import Typography from "./UI/Typography";
 import InputWithLabel from "./UI/InputWithLabel";

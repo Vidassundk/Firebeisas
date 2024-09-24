@@ -1,4 +1,3 @@
-// useAuth.tsx
 import React, { useContext, useState, useEffect, createContext } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../config/firebase";
@@ -24,10 +23,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false); // Stop loading once auth state is resolved
+      setLoading(false);
     });
 
-    return () => unsubscribe(); // Cleanup the listener on component unmount
+    return () => unsubscribe();
   }, []);
 
   return (
@@ -37,7 +36,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
-// Custom hook to use auth state
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
