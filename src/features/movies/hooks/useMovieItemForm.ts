@@ -4,13 +4,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import useMovieCrud from "./useMovieCrud";
 import { MovieListItemHookProps } from "../types";
 import { movieTitleSchema } from "../schemas/movieSchema";
+import { useFetchMovies } from "../MovieContext";
 
 const useMovieItemForm = ({ id, title }: MovieListItemHookProps) => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
-
+  const fetchMovies = useFetchMovies();
   const { updateMovie, deleteMovie, uploadFile, loading, error } =
-    useMovieCrud();
+    useMovieCrud(fetchMovies);
 
   const {
     register,
@@ -25,7 +26,7 @@ const useMovieItemForm = ({ id, title }: MovieListItemHookProps) => {
   });
 
   const onSubmit = async (data: { updatedMovieTitle: string }) => {
-    await updateMovie(id, data.updatedMovieTitle, () => {});
+    await updateMovie(id, data.updatedMovieTitle);
     reset();
   };
 
@@ -46,13 +47,13 @@ const useMovieItemForm = ({ id, title }: MovieListItemHookProps) => {
 
   const uploadHandler = async () => {
     if (uploadedFile) {
-      await uploadFile(uploadedFile, id, () => {});
+      await uploadFile(uploadedFile, id);
       setUploadedFile(null);
     }
   };
 
   const deleteHandler = async () => {
-    await deleteMovie(id, () => {});
+    await deleteMovie(id);
   };
 
   return {

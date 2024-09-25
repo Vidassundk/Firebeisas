@@ -6,15 +6,14 @@ import {
   uploadMovieImage as uploadMovieImageService,
 } from "../../../services/movieService";
 
-const useMovieCrud = () => {
+const useMovieCrud = (refreshMovies: () => void) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const addMovie = async (
     title: string,
     year: number,
-    receivedAnOscar: boolean,
-    refreshMovies: () => void
+    receivedAnOscar: boolean
   ) => {
     setLoading(true);
     setError(null);
@@ -28,7 +27,7 @@ const useMovieCrud = () => {
     }
   };
 
-  const deleteMovie = async (id: string, refreshMovies: () => void) => {
+  const deleteMovie = async (id: string) => {
     setLoading(true);
     setError(null);
     try {
@@ -41,11 +40,7 @@ const useMovieCrud = () => {
     }
   };
 
-  const updateMovie = async (
-    id: string,
-    updatedMovieTitle: string,
-    refreshMovies: () => void
-  ) => {
+  const updateMovie = async (id: string, updatedMovieTitle: string) => {
     setLoading(true);
     setError(null);
     try {
@@ -58,11 +53,7 @@ const useMovieCrud = () => {
     }
   };
 
-  const uploadFile = async (
-    file: File,
-    movieId: string,
-    refreshMovies: () => void
-  ) => {
+  const uploadFile = async (file: File, movieId: string) => {
     setLoading(true);
     setError(null);
     try {

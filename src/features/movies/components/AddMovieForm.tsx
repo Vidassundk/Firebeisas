@@ -4,14 +4,14 @@ import Button from "../../../components/Button";
 import Typography from "../../../components/Typography";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useMovieService from "../hooks/useMovieService";
 import { movieSchema } from "../schemas/movieSchema";
 import useMovieCrud from "../hooks/useMovieCrud";
 import { MovieFormInput } from "../types";
+import { useFetchMovies } from "../MovieContext";
 
 const AddMovieForm = () => {
-  const { addMovie } = useMovieCrud();
-  const { fetchMovies } = useMovieService();
+  const fetchMovies = useFetchMovies();
+  const { addMovie } = useMovieCrud(fetchMovies);
   const [receivedAnOscar, setReceivedAnOscar] = useState<boolean>(false);
 
   const {
@@ -24,7 +24,7 @@ const AddMovieForm = () => {
   });
 
   const onSubmit = (data: MovieFormInput) => {
-    addMovie(data.title, data.year, receivedAnOscar, fetchMovies);
+    addMovie(data.title, data.year, receivedAnOscar);
     reset();
     setReceivedAnOscar(false);
   };
