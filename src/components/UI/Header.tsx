@@ -12,6 +12,7 @@ interface HeaderProps {
 }
 
 const Header = ({ user, logout }: HeaderProps) => {
+  // galima naudoti !!user?.photoURL
   const userHasPhoto = user?.photoURL ? true : false;
 
   return (
@@ -39,6 +40,7 @@ const Header = ({ user, logout }: HeaderProps) => {
         <div className="flex flex-col md:flex-row max-md:gap-5 items-center justify-between mb-5">
           <div className="block flex flex-col gap-2">
             <Typography variant="h3" className="text-nowrap">
+              {/* Kitur naudoji string literal. Gerai butu visur naudoti viena stiliu. */}
               {user?.displayName ? "Hello, " + user?.displayName : "Hello!"}
             </Typography>
             <Typography variant="label" className="text-nowrap">
