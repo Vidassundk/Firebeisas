@@ -39,7 +39,7 @@ const Header = ({ user, logout }: HeaderProps) => {
         <div className="flex flex-col md:flex-row max-md:gap-5 items-center justify-between mb-5">
           <div className="block flex flex-col gap-2">
             <Typography variant="h3" className="text-nowrap">
-              {`Hello, ${user?.displayName || ""}`}
+              {`Hello ${user?.displayName || ""}`}
             </Typography>
             <Typography variant="label" className="text-nowrap">
               Welcome to your favorite movie list.
