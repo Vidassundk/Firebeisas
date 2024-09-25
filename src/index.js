@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { features } from "process";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -44,7 +43,7 @@ reportWebVitals();
 //       -state
 //       -constants
 
-// components folderyje tik tureti kvailus komponentus be jokios biznio logikos
+// src->components folderyje tik tureti kvailus komponentus be jokios biznio logikos
 // biznio logika turetu buti features folderyje ir suskirstyta pagal featuresus
 
 // Taip pat darant uzduoti siulyciau fokusuotis ne i projekto dizaina ar funkcionaluma, o i koda, jo kokybe, struktura, readability. Trukstant laiko geriau jau nepabaigti funkcionalumo

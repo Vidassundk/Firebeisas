@@ -49,6 +49,23 @@ const useMovieListItem = ({
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    // Sita aptareme per meet'a. Tai patarimas visada vengti nested if'u.
+
+    // if (!file) {
+    //   return;
+    // }
+
+    // const validImageTypes = ["image/jpeg", "image/png", "image/gif"];
+    // const isImageValid = validImageTypes.includes(file.type);
+
+    // if (!isImageValid) {
+    //   setFileError("Please upload a valid image file (jpg, png, gif)");
+
+    //   return;
+    // }
+
+    // setUploadedFile(file);
+
     if (file) {
       const validImageTypes = ["image/jpeg", "image/png", "image/gif"];
       if (validImageTypes.includes(file.type)) {
