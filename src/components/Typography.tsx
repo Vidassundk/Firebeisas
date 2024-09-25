@@ -1,6 +1,4 @@
-// src/components/Typography.tsx
-
-import { cn } from "../../util/cn";
+import { cn } from "../util/cn";
 import React, { ReactNode } from "react";
 
 interface TypographyProps {
@@ -15,11 +13,11 @@ interface TypographyProps {
     | "b"
     | "link"
     | "label"
-    | "error"; // Include "error" as an option
+    | "error";
   className?: string;
   children: ReactNode;
-  href?: string; // Only needed for "link"
-  htmlFor?: string; // Only needed for "label"
+  href?: string;
+  htmlFor?: string;
 }
 
 const Typography: React.FC<TypographyProps> = ({
@@ -29,14 +27,13 @@ const Typography: React.FC<TypographyProps> = ({
   href,
   htmlFor,
 }) => {
-  // Map "error" to a valid tag (e.g., <p>)
   const Tag: React.ElementType =
     variant === "link"
       ? "a"
       : variant === "label"
       ? "label"
       : variant === "error"
-      ? "p" // Error should be rendered as a paragraph
+      ? "p"
       : variant;
 
   const variantClass = (() => {
@@ -62,7 +59,7 @@ const Typography: React.FC<TypographyProps> = ({
       case "label":
         return "font-semibold text-sm text-gray-600 pb-1 block";
       case "error":
-        return "text-sm text-red-500"; // Style for the error variant
+        return "text-sm text-red-500";
       default:
         return "";
     }
@@ -70,7 +67,6 @@ const Typography: React.FC<TypographyProps> = ({
 
   const combinedClassName = cn(variantClass, className);
 
-  // Handle "link" variant
   if (variant === "link" && href) {
     return (
       <a className={combinedClassName} href={href}>
@@ -79,7 +75,6 @@ const Typography: React.FC<TypographyProps> = ({
     );
   }
 
-  // Handle "label" variant with htmlFor
   if (variant === "label") {
     return (
       <label className={combinedClassName} htmlFor={htmlFor}>
@@ -88,7 +83,6 @@ const Typography: React.FC<TypographyProps> = ({
     );
   }
 
-  // Handle all other variants including "error"
   return <Tag className={combinedClassName}>{children}</Tag>;
 };
 

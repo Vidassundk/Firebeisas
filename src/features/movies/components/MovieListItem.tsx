@@ -1,31 +1,12 @@
 import React from "react";
-import Typography from "./UI/Typography";
-import InputWithLabel from "./UI/InputWithLabel";
-import Button from "./UI/Button";
-import useMovieListItem from "../hooks/useMovieListItem";
-import Badge from "./UI/Badge";
+import Typography from "../../../components/Typography";
+import InputWithLabel from "../../../components/InputWithLabel";
+import Button from "../../../components/Button";
+import useMovieItemForm from "../hooks/useMovieItemForm"; // Import the refactored hook
+import Badge from "../../../components/Badge";
+import { MovieListItemProps } from "../types";
 
-interface Movie {
-  id: string;
-  title: string;
-  receivedAnOscar: boolean;
-  imageUrl: string;
-  releaseYear: number;
-}
-
-interface MovieListItemProps {
-  movie: Movie;
-  updateFunction: (id: string, updatedMovieTitle: string) => Promise<void>;
-  deleteFunction: (id: string) => Promise<void>;
-  uploadFileFunction: (file: File, movieId: string) => Promise<void>;
-}
-
-const MovieListItem: React.FC<MovieListItemProps> = ({
-  movie,
-  updateFunction,
-  deleteFunction,
-  uploadFileFunction,
-}) => {
+const MovieListItem: React.FC<MovieListItemProps> = ({ movie }) => {
   const {
     register,
     handleSubmit,
@@ -36,14 +17,9 @@ const MovieListItem: React.FC<MovieListItemProps> = ({
     errors,
     uploadedFile,
     fileError,
-  } = useMovieListItem({
+  } = useMovieItemForm({
     id: movie.id,
     title: movie.title,
-    receivedAnOscar: movie.receivedAnOscar,
-    imageUrl: movie.imageUrl,
-    updateFunction,
-    deleteFunction,
-    uploadFileFunction,
   });
 
   return (

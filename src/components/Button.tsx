@@ -1,15 +1,15 @@
 import React from "react";
-import { cn } from "../../util/cn"; // Import your utility function
+import { cn } from "../util/cn";
 
 interface ButtonProps {
   label: string;
   onClick?: () => void;
-  styleType: "google" | "github" | "login" | "error"; // Add "error" as a valid styleType
-  arrow?: boolean; // Optional arrow
-  type?: "button" | "submit" | "reset"; // Button type
-  className?: string; // Custom class names
-  disabled?: boolean; // Disabled state
-  href?: string; // Optional link URL
+  styleType: "google" | "github" | "login" | "error";
+  arrow?: boolean;
+  type?: "button" | "submit" | "reset";
+  className?: string;
+  disabled?: boolean;
+  href?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -19,8 +19,8 @@ const Button: React.FC<ButtonProps> = ({
   arrow = false,
   type = "button",
   className = "",
-  disabled = false, // Default disabled is false
-  href, // Optional href for link
+  disabled = false,
+  href,
 }) => {
   const buttonStyles = {
     google:
@@ -31,22 +31,21 @@ const Button: React.FC<ButtonProps> = ({
       "transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-3 px-5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block",
     error:
       "transition duration-200 bg-red-500 hover:bg-red-600 focus:bg-red-700 focus:shadow-sm focus:ring-4 focus:ring-red-500 focus:ring-opacity-50 text-white w-full py-3 px-5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block",
-    disabled: "cursor-not-allowed opacity-50 bg-gray-300 text-gray-400", // Styles for disabled state
+    disabled: "cursor-not-allowed opacity-50 bg-gray-300 text-gray-400",
   };
 
-  // If href is provided, render an anchor tag
   if (href) {
     return (
       <a
         href={href}
         className={cn(
           buttonStyles[styleType],
-          disabled && buttonStyles["disabled"], // Apply disabled styles if necessary
+          disabled && buttonStyles["disabled"],
           className
         )}
         target="_blank"
-        rel="noopener noreferrer" // Best practice for external links
-        onClick={disabled ? (e) => e.preventDefault() : undefined} // Prevent default if disabled
+        rel="noopener noreferrer"
+        onClick={disabled ? (e) => e.preventDefault() : undefined}
       >
         <span className="inline-block mr-2">{label}</span>
         {arrow && (
@@ -69,17 +68,16 @@ const Button: React.FC<ButtonProps> = ({
     );
   }
 
-  // Otherwise, render a button
   return (
     <button
       type={type}
       className={cn(
         buttonStyles[styleType],
-        disabled && buttonStyles["disabled"], // Apply disabled styles if the button is disabled
+        disabled && buttonStyles["disabled"],
         className
       )}
-      onClick={disabled ? undefined : onClick} // Prevent click if disabled
-      disabled={disabled} // Native HTML disabled prop
+      onClick={disabled ? undefined : onClick}
+      disabled={disabled}
     >
       <span className="inline-block mr-2">{label}</span>
       {arrow && (

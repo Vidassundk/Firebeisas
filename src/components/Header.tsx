@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "../../util/cn";
+import { cn } from "../util/cn";
 import Typography from "./Typography";
 import Button from "./Button";
 
@@ -12,7 +12,7 @@ interface HeaderProps {
 }
 
 const Header = ({ user, logout }: HeaderProps) => {
-  const userHasPhoto = user?.photoURL ? true : false;
+  const userHasPhoto = !!user?.photoURL;
 
   return (
     <section className="relative pt-40 pb-12">
@@ -39,10 +39,10 @@ const Header = ({ user, logout }: HeaderProps) => {
         <div className="flex flex-col md:flex-row max-md:gap-5 items-center justify-between mb-5">
           <div className="block flex flex-col gap-2">
             <Typography variant="h3" className="text-nowrap">
-              {user?.displayName ? "Hello, " + user?.displayName : "Hello!"}
+              {`Hello, ${user?.displayName || ""}`}
             </Typography>
             <Typography variant="label" className="text-nowrap">
-              Organise your favorite movies.
+              Welcome to your favorite movie list.
             </Typography>
           </div>
           <div className="flex flex-row gap-2 w-full max-w-[600px]">

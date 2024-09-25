@@ -2,7 +2,7 @@ import React from "react";
 
 interface BadgeProps {
   children: React.ReactNode;
-  variant?: "blue" | "gray"; // Add more variants as needed
+  variant?: "blue" | "gray";
 }
 
 const Badge: React.FC<BadgeProps> = ({ children, variant = "blue" }) => {

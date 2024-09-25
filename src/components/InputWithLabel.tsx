@@ -1,5 +1,3 @@
-// src/components/InputWithLabel.tsx
-
 import React, { forwardRef } from "react";
 import Typography from "./Typography";
 

@@ -1,5 +1,3 @@
-// src/services/movieService.ts
-
 import {
   doc,
   updateDoc,
